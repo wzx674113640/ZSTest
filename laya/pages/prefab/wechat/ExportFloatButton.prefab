@@ -1,0 +1,25 @@
+{
+    "x":0,
+    "type":"Button",
+    "selectedBox":79,
+    "searchKey":"Button,exportFloatBtn",
+    "props":{"y":0,"x":0,"stateNum":"1","skin":"ad/img_float_1.png","presetID":1,"preset":"laya/pages/prefab/wechat/ExportFloatButton.prefab","name":"exportFloatBtn","isPresetRoot":true},
+    "nodeParent":-1,
+    "maxID":80,
+    "label":"exportFloatBtn",
+    "isDirectory":false,
+    "isAniNode":true,
+    "hasChild":false,
+    "compId":79,
+    "child":[
+        ],
+    "animations":[
+        {
+            "nodes":[
+                ],
+            "name":"ani1",
+            "id":1,
+            "frameRate":24,
+            "action":0
+        }]
+}

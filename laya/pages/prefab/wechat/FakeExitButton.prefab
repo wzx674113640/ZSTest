@@ -1,0 +1,25 @@
+{
+    "x":0,
+    "type":"Button",
+    "selectedBox":7,
+    "searchKey":"Button,btn_exit",
+    "props":{"y":0,"x":0,"stateNum":"1","skin":"ad/icon-cancel.png","presetID":1,"preset":"laya/pages/prefab/wechat/FakeExitButton.prefab","name":"btn_exit","isPresetRoot":true},
+    "nodeParent":-1,
+    "maxID":8,
+    "label":"btn_exit",
+    "isDirectory":false,
+    "isAniNode":true,
+    "hasChild":false,
+    "compId":7,
+    "child":[
+        ],
+    "animations":[
+        {
+            "nodes":[
+                ],
+            "name":"ani1",
+            "id":1,
+            "frameRate":24,
+            "action":0
+        }]
+}

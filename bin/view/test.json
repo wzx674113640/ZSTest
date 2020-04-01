@@ -1,0 +1,1 @@
+{"type":"Scene","props":{"width":750,"height":1334},"compId":2,"child":[{"type":"Script","props":{"runtime":"test/ShaderTest.ts"},"compId":3}],"loadList":[],"loadList3D":[]}

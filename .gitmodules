@@ -1,0 +1,10 @@
+
+[submodule "bin/framework"]
+	path = bin/framework
+	url = git@gitee.com:zhise/zs-laya.git
+[submodule "libs/framework"]
+	path = libs/framework
+	url = git@gitee.com:zhise/zs-laya.git
+[submodule "bin/adapter"]
+	path = bin/adapter
+	url = git@gitee.com:zhise/zs-laya-adapter.git

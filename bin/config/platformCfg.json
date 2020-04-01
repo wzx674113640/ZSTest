@@ -1,0 +1,332 @@
+{
+    "adCfg": {
+        "zs_ad_jump_num": 2,
+        "zs_banner_banner_time": 2000,
+        "zs_banner_city": 1,
+        "zs_banner_horizontal_enable": 1,
+        "zs_banner_move_time": "500",
+        "zs_banner_refresh_time": 30000,
+        "zs_banner_rotate_id1": "adunit-e666a225f61ad142",
+        "zs_banner_rotate_id2": "adunit-e666a225f61ad142",
+        "zs_banner_rotate_id3": "adunit-e666a225f61ad142",
+        "zs_banner_show_number": "2",
+        "zs_banner_show_time": 1,
+        "zs_banner_system": "",
+        "zs_banner_text_time": 2000,
+        "zs_banner_vertical_enable": 1,
+        "zs_click_award_add": "0.1",
+        "zs_click_award_back": "0.005",
+        "zs_click_award_city": 1,
+        "zs_click_award_money": "10",
+        "zs_click_award_num": "[1,2,3,4,5]",
+        "zs_click_award_percent": "[0.4,0.7]",
+        "zs_click_award_since": "1",
+        "zs_click_award_system": "",
+        "zs_click_award_time": 1,
+        "zs_finish_city": 1,
+        "zs_finish_jump": 0,
+        "zs_finish_time": 1,
+        "zs_full_screen_ad": 1,
+        "zs_full_screen_adunit": "",
+        "zs_full_screen_city": 1,
+        "zs_full_screen_jump": 0,
+        "zs_full_screen_rotate": "1",
+        "zs_full_screen_time": 1,
+        "zs_history_list_jump": "1",
+        "zs_jump_refesh": 4000,
+        "zs_jump_style": 0,
+        "zs_jump_switch": 1,
+        "zs_number": "1.0",
+        "zs_ready_click_num": "5",
+        "zs_recommend_id1": "",
+        "zs_recommend_id2": "",
+        "zs_recommend_id3": "",
+        "zs_recommend_id4": "",
+        "zs_revive_click_num": 0,
+        "zs_revive_countdown": 9,
+        "zs_revive_share_num": 0,
+        "zs_revive_video_num": -1,
+        "zs_share_img": "这个是分享图片地址",
+        "zs_share_title": "这个是分享标题",
+        "zs_shield_gdt_export": "1",
+        "zs_switch": 1,
+        "zs_unmiss_text_time": "3000",
+        "zs_version": "1.0",
+        "zs_video_adunit": "adunit-02aca121c03f37a2"
+    },
+    "iosFilterAppIds": [],  
+    "bannerCfg": {
+        "BannerAnchorArr": [
+            "BOTTOM_LEFT",
+            "BOTTOM_RIGHT",
+            "TOP_LEFT",
+            "TOP_RIGHT"
+        ],
+        "HomePage": {
+            "initGroupArr": [
+                {
+                    "sign": 1,
+                    "length": 1,
+                    "autoChange": false,
+                    "isReset": false
+                }
+            ],
+            "exposureData": {
+                "sign": 1,
+                "anchorArr": [
+                    "BOTTOM_LEFT"
+                ]
+            }
+        },
+        "WinPage": {
+            "initGroupArr": [
+                {
+                    "sign": 2,
+                    "length": 3,
+                    "autoChange": true,
+                    "isReset": true
+                }
+            ],
+            "showData": {
+                "sign": 2,
+                "isDelay": true
+            },
+            "exposureData": {
+                "sign": 2,
+                "anchorArr": [
+                    "BOTTOM_LEFT",
+                    "BOTTOM_RIGHT"
+                ]
+            }
+        },
+        "RelivePage": {
+            "initGroupArr": [
+                {
+                    "sign": 2,
+                    "length": 3,
+                    "autoChange": true,
+                    "isReset": true
+                }
+            ],
+            "showData": {
+                "sign": 2,
+                "isDelay": true
+            },
+            "exposureData": {
+                "sign": 2,
+                "anchorArr": [
+                    "BOTTOM_LEFT",
+                    "BOTTOM_RIGHT"
+                ]
+            }
+        },
+        "KnockEgg": {
+            "initGroupArr": [
+                {
+                    "sign": 3,
+                    "length": 3,
+                    "autoChange": true,
+                    "isReset": true
+                }
+            ],
+            "showData": {
+                "unAutoShow": true,
+                "sign": 3,
+                "showType": 1
+            },
+            "exposureData": {
+                "sign": 3,
+                "anchorArr": [
+                    "BOTTOM_LEFT",
+                    "BOTTOM_RIGHT"
+                ]
+            }
+        },
+        "FullAd": {
+            "lockHide": true
+        },
+        "ListAd": {
+            "lockHide": true
+        }
+    },
+    "exportGameCfg": {
+        "HomePage":[
+            {
+                "viewUrl": "prefab/wechat/FakeExitButton.json",
+                "parentRoot":"topUI",
+                "x":560,
+                "y":100,
+                "scriptType":"FakeExitBtn"
+            },
+            {
+                "viewUrl": "prefab/wechat/ExportFloatButton.json",
+                "parentRoot":"leftFloatUI",
+                "x":0,
+                "y":148,
+                "scriptType":"FloatExportBtn"
+            },
+            {
+                "adType": "promotion",
+                "viewUrl": "prefab/wechat/ExportShakeBox_1.json",
+                "parentRoot":"bottomUI",
+                "x":0,
+                "y":40,
+                "scriptType":"ShakeExportBox"
+            },
+            {
+                "adType": "promotion",
+                "viewUrl": "prefab/wechat/ExportHorizontalList_1.json",
+                "parentRoot":"bottomUI",
+                "x":0,
+                "y":430,
+                "scriptType":"ExportScrollH"
+            }
+        ],
+        "GamePage":[
+            {
+                "viewUrl": "prefab/wechat/FakeExitButton.json",
+                "parentRoot":"topUI",
+                "x":560,
+                "y":100,
+                "scriptType":"FakeExitBtn",
+                "isHide":true
+            },
+            {
+                "adType": "promotion",
+                "viewUrl": "prefab/wechat/ExportHorizontalList_1.json",
+                "parentRoot":"topUI",
+                "x":0,
+                "y":180,
+                "scriptType":"ExportScrollH"
+            }
+        ],
+        "FloatAd": [
+            {
+                "adType": "promotion",
+                "readonly": true
+            }
+        ],
+        "FullAd": [
+            {
+                "adType": "promotion",
+                "readonly": true
+            }
+        ],
+        "ListAd": [
+            {
+                "adType": "promotion",
+                "readonly": true
+            }
+        ],
+        "KnockEgg":[
+            {
+                "adType": "promotion",
+                "viewUrl": "prefab/wechat/ExportLikeList.json",
+                "parentRoot":"middleUI",
+                "x":30,
+                "y":380,
+                "scriptType":"ExportScrollH"
+            }
+        ],
+        "RelivePage": [
+            {
+                "viewUrl": "prefab/wechat/FakeExitButton.json",
+                "parentRoot":"topUI",
+                "x":560,
+                "y":100,
+                "scriptType":"FakeExitBtn",
+                "isHide":true
+            },
+            {       
+                "adType": "promotion",
+                "viewUrl": "prefab/wechat/ExportFlyBox.json",
+                "parentRoot":"middleUI",
+                "x":0,
+                "y":20,
+                "scriptType":"ExportLeftFlyBox",
+                "checkKey": "zs_finish_jump"
+            }
+        ],
+        "WinPage": [
+            {
+                "viewUrl": "prefab/wechat/FakeExitButton.json",
+                "parentRoot":"topUI",
+                "x":560,
+                "y":100,
+                "scriptType":"FakeExitBtn",
+                "isHide":true
+            },
+            {       
+                "adType": "promotion",
+                "viewUrl": "prefab/wechat/ExportFlyBox.json",
+                "parentRoot":"middleUI",
+                "x":0,
+                "y":20,
+                "scriptType":"ExportLeftFlyBox",
+                "checkKey": "zs_finish_jump"
+            }
+        ],
+        "RelivePage_2": [
+            {       
+                "adType": "promotion",
+                "viewUrl": "prefab/wechat/ExportVerticalList_2.json",
+                "parentRoot":"middleUI",
+                "x":38,
+                "y":236,
+                "scriptType":"ExportScrollV"
+            },
+            {       
+                "adType": "promotion",
+                "viewUrl": "prefab/wechat/ExportRightPop.json",
+                "parentRoot":"middleUI",
+                "x":600,
+                "y":236,
+                "scriptType":"ExportRightPop"
+            }
+        ],
+        "WinPage_2": [
+            {       
+                "adType": "promotion",
+                "viewUrl": "prefab/wechat/ExportVerticalList_2.json",
+                "parentRoot":"middleUI",
+                "x":38,
+                "y":236,
+                "scriptType":"ExportScrollV"
+            },
+            {       
+                "adType": "promotion",
+                "viewUrl": "prefab/wechat/ExportRightPop.json",
+                "parentRoot":"middleUI",
+                "x":600,
+                "y":236,
+                "scriptType":"ExportRightPop"
+            }
+        ]
+    },
+    
+    "mistakenlyTouchCfg": {
+        "WinPage":[
+            {
+                "path": "bottomUI/homeBtn",
+                "offsetX": 0,
+                "offsetY": 150
+            },
+            {
+                "path": "bottomUI/nextBtn",
+                "offsetX": 0,
+                "offsetY": 150
+            }
+        ],
+        "RelivePage":[
+            {
+                "path": "bottomUI/jumpByShareBtn",
+                "offsetX": 0,
+                "offsetY": 150
+            },{
+                "path": "bottomUI/replayBtn",
+                "offsetX": 0,
+                "offsetY": 150 
+            }
+        ]
+    }
+}

@@ -1,0 +1,30 @@
+<page>
+   <item name="view/rcSettings.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="view/rcScore.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="view/rcRelive.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="view/rcRank.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="view/rcPlaying.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="view/rcLoading.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="view/zsAdIcons.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="view/rcGuide.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="view/rcSkin.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="view/HomePage.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="view/RelivePage.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="view/sampleScreenAd.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="view/sampleScreenAd2.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="view/StorePage.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="view/LoadingPage.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="view/RankPage.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="view/GamePage.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="view/MsgBoxPage.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="view/zsCompleted.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="view/WinPage.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="view/comm/EndAd.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="view/comm/FloatLeftAd.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="view/comm/BottomAd.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="view/comm/FloatAd.scene" props="" ifExport="默认" aName=""/>
+   <item name="view/comm/HomeAd.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="view/comm/ResultAd.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="view/ad/GameAdSlide.scene" props="" ifExport="分离模式" aName=""/>
+   <item name="view/comm/HomePage.scene" props="" ifExport="分离模式" aName=""/>
+</page>

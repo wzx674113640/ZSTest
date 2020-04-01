@@ -1,0 +1,18 @@
+<res>
+   <item name="gameUI/img_playing_number_bg.png" type="Image" compress="0" pack="0" quality="80" props="sizeGrid=0,70,0,70" picType="0" scale="0"/>
+   <item name="rankUI/clip_rank_item_bg.png" type="Clip" compress="0" pack="1" quality="80" props="" picType="0" scale="0"/>
+   <item name="rankUI/img_rank_title_bg.png" type="Image" compress="0" pack="1" quality="80" props="" picType="0" scale="0"/>
+   <item name="gameUI/img_skin_bg.png" type="Image" compress="0" pack="0" quality="80" props="sizeGrid=17,17,17,17" picType="0" scale="0"/>
+   <item name="icon/00.png" type="Sprite" compress="0" pack="2" quality="80" props="" picType="0" scale="0"/>
+   <item name="icon/01.png" type="Sprite" compress="0" pack="0" quality="80" props="" picType="0" scale="0"/>
+   <item name="icon/02.png" type="Sprite" compress="0" pack="0" quality="80" props="" picType="0" scale="0"/>
+   <item name="icon/03.png" type="Sprite" compress="0" pack="0" quality="80" props="" picType="0" scale="0"/>
+   <item name="icon/04.png" type="Sprite" compress="0" pack="0" quality="80" props="" picType="0" scale="0"/>
+   <item name="icon/05.png" type="Sprite" compress="0" pack="0" quality="80" props="" picType="0" scale="0"/>
+   <item name="skinImg" type="" compress="0" pack="2" quality="80" props="" picType="0" scale="0"/>
+   <item name="icon" type="" compress="0" pack="0" quality="80" props="" picType="0" scale="0"/>
+   <item name="font" type="" compress="0" pack="2" quality="80" props="" picType="0" scale="0"/>
+   <item name="ad/egg/title_egg.png" type="Sprite" compress="0" pack="1" quality="80" props="" picType="0" scale="0"/>
+   <item name="ad/index-hot2.png" type="Sprite" compress="0" pack="1" quality="80" props="" picType="0" scale="0"/>
+   <item name="ad/you-like.png" type="Sprite" compress="0" pack="1" quality="80" props="" picType="0" scale="0"/>
+</res>
