@@ -1,8 +1,8 @@
 {
     "x":0,
     "type":"View",
-    "selectedBox":3,
-    "selecteID":20,
+    "selectedBox":2,
+    "selecteID":19,
     "searchKey":"View",
     "props":{"width":750,"sceneColor":"#999999","hitTestPrior":false,"height":1334,"autoDestroyAtClosed":true},
     "nodeParent":-1,
@@ -34,13 +34,14 @@
                     "props":{"y":33,"x":24,"width":72,"visible":true,"skin":"gameUI/img_playing_icon.png","mouseEnabled":false,"height":72},
                     "nodeParent":3,
                     "label":"Image",
-                    "isOpen":false,
+                    "isOpen":true,
                     "isDirectory":true,
                     "isAniNode":true,
                     "hasChild":true,
                     "compId":6,
                     "child":[
                         {
+                            "x":45,
                             "type":"Label",
                             "searchKey":"Label,zsGold",
                             "props":{"y":-9.5,"x":71,"width":127,"visible":true,"var":"zsGold","valign":"middle","text":"407","height":91,"fontSize":66,"font":"guoshancheshuzi03","color":"#ffffff","bold":true,"align":"left"},
@@ -126,23 +127,6 @@
             "isAniNode":true,
             "hasChild":false,
             "compId":5,
-            "child":[
-                ]
-        },
-        {
-            "x":15,
-            "type":"Script",
-            "switchAble":true,
-            "source":"src/compUI/GamePlayUI.ts",
-            "searchKey":"Script,GamePlayUI",
-            "removeAble":true,
-            "props":{"goldLabel":"@node:8"},
-            "nodeParent":2,
-            "label":"GamePlayUI",
-            "isDirectory":false,
-            "isAniNode":true,
-            "hasChild":false,
-            "compId":19,
             "child":[
                 ]
         }],

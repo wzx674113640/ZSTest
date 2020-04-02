@@ -14,7 +14,7 @@ export default class GamePlayUI extends Laya.Script {
     onEnable(): void {
         super.onEnable();
         this.goldLabel.text = zs.laya.game.AppMain.playerInfo.gold.toString();
-        //Laya.stage.event(EventId.GAME_START);
+        Laya.stage.event(EventId.GAME_START);
         // Laya.stage.on(EventId.EGG_GET_AWARD,this,this.onGetEggReward);
     }
 
@@ -22,7 +22,7 @@ export default class GamePlayUI extends Laya.Script {
         super.onDisable();
     }
 
-    
+
     onClick() {
         // zs.laya.game.UIService.showKnockEggView();
         let random:number = Math.round(Math.random()*10);

@@ -248,7 +248,7 @@ window.zs.laya = window.zs.laya || {};
                 });
             }
         }
-
+        
         /**主动同步用户信息给后台 */
         static updatePlayerInfo(args) {
             var appMain = AppMain;

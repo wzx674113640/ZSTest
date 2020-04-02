@@ -1,28 +1,6 @@
 (function () {
     'use strict';
 
-    var EventId = zs.laya.game.EventId;
-    class GamePlayUI extends Laya.Script {
-        constructor() { super(); }
-        onEnable() {
-            super.onEnable();
-            this.goldLabel.text = zs.laya.game.AppMain.playerInfo.gold.toString();
-            Laya.stage.event(EventId.GAME_START);
-        }
-        onDisable() {
-            super.onDisable();
-        }
-        onClick() {
-            let random = Math.round(Math.random() * 10);
-            if (random < 5) {
-                Laya.stage.event(EventId.GAME_FAILED);
-            }
-            else {
-                Laya.stage.event(EventId.GAME_WIN);
-            }
-        }
-    }
-
     class DyqqShader {
         static get ShaderName() {
             return "DyqqShader";
@@ -170,7 +148,6 @@
         }
         static init() {
             var reg = Laya.ClassUtils.regClass;
-            reg("compUI/GamePlayUI.ts", GamePlayUI);
             reg("test/ShaderTest.ts", ShaderTest);
         }
     }
@@ -180,7 +157,7 @@
     GameConfig.screenMode = "none";
     GameConfig.alignV = "top";
     GameConfig.alignH = "left";
-    GameConfig.startScene = "view/comm/HomePage.scene";
+    GameConfig.startScene = "view/game/GamePage.scene";
     GameConfig.sceneRoot = "";
     GameConfig.debug = false;
     GameConfig.stat = false;
@@ -190,6 +167,20 @@
 
     class SceneLogic extends Laya.Script {
         constructor() { super(); }
+        onStart() {
+            this.Scene = this.owner;
+            this.Cube = this.Scene.getChildByName("Cube");
+            var material = new DyqqMaterial();
+            Laya.loader.load(["res/layabox.png", "res/clip_replay_btn.png"], Laya.Handler.create(null, function () {
+                material.BaseTextureSrc = Laya.loader.getRes("res/layabox.png");
+                material.BaseTextureDst = Laya.loader.getRes("res/clip_replay_btn.png");
+                material.alpha = 0.1;
+            }));
+            this.Cube.meshRenderer.material = material;
+        }
+        onUpdate() {
+            this.Cube.transform.rotate(new Laya.Vector3(0, 2, 0), false, false);
+        }
         onEnable() {
         }
         onDisable() {
@@ -201,7 +192,7 @@
     }
 
     var ObjectPool = zs.laya.ObjectPool;
-    var EventId$1 = zs.laya.game.EventId;
+    var EventId = zs.laya.game.EventId;
     class GameLogic extends zs.laya.game.AppMain {
         constructor() {
             super();
@@ -210,14 +201,14 @@
         onAwake() {
             super.onAwake();
             zs.laya.game.UIService.viewScript.store = zs.laya.ui.NormalStorePage;
-            Laya.stage.once(EventId$1.LAUNCH_COMPLETED, this, this.onGameLaunchReady);
-            Laya.stage.on(EventId$1.UI_VIEW_CLOSED, this, this.onViewClosed);
-            Laya.stage.on(EventId$1.UI_VIEW_OPENED, this, this.onViewOpened);
+            Laya.stage.once(EventId.LAUNCH_COMPLETED, this, this.onGameLaunchReady);
+            Laya.stage.on(EventId.UI_VIEW_CLOSED, this, this.onViewClosed);
+            Laya.stage.on(EventId.UI_VIEW_OPENED, this, this.onViewOpened);
         }
         onDestroy() {
             this.sceneLogic = null;
-            Laya.stage.off(EventId$1.UI_VIEW_CLOSED, this, this.onViewClosed);
-            Laya.stage.off(EventId$1.UI_VIEW_OPENED, this, this.onViewOpened);
+            Laya.stage.off(EventId.UI_VIEW_CLOSED, this, this.onViewClosed);
+            Laya.stage.off(EventId.UI_VIEW_OPENED, this, this.onViewOpened);
         }
         onGameLaunchReady(s) {
             DyqqShader.initShader();
@@ -228,7 +219,7 @@
             else {
                 Laya.stage.addComponent(ShaderTest);
             }
-            Laya.stage.event(EventId$1.GAME_HOME);
+            Laya.stage.event(EventId.GAME_HOME);
         }
         onViewClosed(viewName) {
             console.log(`${viewName} closed`);
