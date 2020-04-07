@@ -15,7 +15,7 @@
     "bgm": "music/bg.mp3",
     "soundClick": "sound/buttonClick.wav",
     "soundViewOpen": "sound/viewOpen.wav",
-    "default3DScene": "SampleScene",
+    "default3DScene": "Car0402",
     "viewMap": {
         "loading": "view/comm/LoadingPage.scene",
         "home": "view/comm/HomePage.scene",

@@ -15779,6 +15779,15 @@ declare module laya.d3.resource.models {
 		 * @param slices 垂直层数
 		 */
 		static createSphere(radius?:number,stacks?:number,slices?:number):laya.d3.resource.models.Mesh;
+
+		
+		/**
+		 * 自定义一个模型
+		 * @param vertexDeclaration 顶点声明
+		 * @param vertices 顶点
+		 * @param indices 指数
+		 */
+		static _createMesh(vertexDeclaration: Laya.VertexDeclaration, vertices: Float32Array, indices: Uint16Array):laya.d3.resource.models.Mesh;
 	}
 
 }

@@ -2,7 +2,7 @@
 	"version":"LAYAMATERIAL:02",
 	"props":{
 		"type":"Laya.BlinnPhongMaterial",
-		"name":"MaterialDefault",
+		"name":"Fnish",
 		"renderStates":[
 			{
 				"cull":2,
@@ -13,13 +13,16 @@
 				"depthTest":515
 			}
 		],
-		"enableVertexColor":false,
 		"alphaTest":false,
 		"alphaTestValue":0.5,
-		"renderQueue":3000,
-		"albedoIntensity":1,
-		"enableLighting":true,
-		"shininess":0.078125,
+		"renderQueue":2000,
+		"metallic":0,
+		"smoothness":0.5,
+		"smoothnessTextureScale":1,
+		"smoothnessSource":0,
+		"normalTextureScale":1,
+		"parallaxTextureScale":0.02,
+		"occlusionTextureStrength":1,
 		"textures":[],
 		"vectors":[
 			{
@@ -32,20 +35,20 @@
 				]
 			},
 			{
-				"name":"specularColor",
+				"name":"albedoColor",
 				"value":[
-					0.5,
-					0.5,
-					0.5,
+					0.9622642,
+					0.4089224,
+					0.2314881,
 					1
 				]
 			},
 			{
-				"name":"albedoColor",
+				"name":"emissionColor",
 				"value":[
-					1,
-					1,
-					1,
+					0,
+					0,
+					0,
 					1
 				]
 			}

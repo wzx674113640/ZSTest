@@ -550,7 +550,7 @@ window.zs.laya = window.zs.laya || {};
                 this.hotIds.push(Math.floor(interval * Math.random()) + index * interval);
             }
         }
-
+        
         startAutoScrollAd() {
             if(!this.list){
                 return;

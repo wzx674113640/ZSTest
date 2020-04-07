@@ -157,7 +157,7 @@
     GameConfig.screenMode = "none";
     GameConfig.alignV = "top";
     GameConfig.alignH = "left";
-    GameConfig.startScene = "view/game/GamePage.scene";
+    GameConfig.startScene = "view/ad/FloatAd.scene";
     GameConfig.sceneRoot = "";
     GameConfig.debug = false;
     GameConfig.stat = false;
@@ -165,34 +165,401 @@
     GameConfig.exportSceneToJson = true;
     GameConfig.init();
 
+    class RunwayControl {
+        constructor() {
+            this.RunwayList = new Array();
+            this.startPosz = 0;
+            this.runwayCount = 5;
+            this.disZ = 0;
+            this.runwayIndex = 0;
+            this.FnishDis = 50;
+        }
+        static getInstance() {
+            if (this._instance == null) {
+                this._instance = new RunwayControl();
+            }
+            return this._instance;
+        }
+        SetRunwayPrefabs(runway) {
+            this.RunwayPrefabs = runway;
+            this.startPosz = this.RunwayPrefabs.transform.position.z;
+            this.Fnish = this.RunwayPrefabs.parent.getChildByName("Fnish");
+        }
+        Init() {
+            if (this.RunwayPrefabs == null) {
+                console.error("赛道对象为null");
+                return;
+            }
+            this.disZ = this.RunwayPrefabs.transform.scale.z;
+            var currentPosz = this.startPosz;
+            this.RunwayList.push({
+                "object": this.RunwayPrefabs,
+                "posz": this.startPosz
+            });
+            for (var i = 0; i < this.runwayCount - 1; i++) {
+                let runway = this.RunwayPrefabs.clone();
+                this.RunwayPrefabs.parent.addChild(runway);
+                currentPosz += this.disZ;
+                console.log(runway, currentPosz);
+                runway.transform.localPositionZ = currentPosz;
+                this.RunwayList.push({
+                    "object": runway,
+                    "posz": currentPosz
+                });
+            }
+        }
+        ResetRunway() {
+            for (var i = 0; i < this.RunwayList.length; i++) {
+                this.RunwayList[i].object.transform.localPositionZ = this.RunwayList[i].posz;
+            }
+        }
+        CreatorRunway() {
+            this.RunwayList[this.runwayIndex].object.transform.localPositionZ += (this.disZ * this.runwayCount);
+            this.runwayIndex++;
+            if (this.runwayIndex >= this.RunwayList.length) {
+                this.runwayIndex = 0;
+            }
+            if (this.RunwayList[this.runwayIndex].object.transform.localPositionZ > this.FnishDis) {
+                console.log("生成终点");
+                this.Fnish.active = true;
+                this.Fnish.transform.localPositionZ = this.RunwayList[this.runwayIndex].object.transform.localPositionZ;
+            }
+        }
+    }
+    RunwayControl._instance = null;
+
+    var EventId = zs.laya.game.EventId;
+    var GameState;
+    (function (GameState) {
+        GameState[GameState["GameReady"] = 0] = "GameReady";
+        GameState[GameState["Gameing"] = 1] = "Gameing";
+        GameState[GameState["GameOver"] = 2] = "GameOver";
+        GameState[GameState["GamePass"] = 3] = "GamePass";
+    })(GameState || (GameState = {}));
+    class Game extends Laya.Script {
+        constructor() {
+            super();
+            this.MyGameState = GameState.GameReady;
+            this.AIPlayerList = new Array();
+            Laya.stage.on(EventId.GAME_PREPARE, this, this.onGamePrepare);
+        }
+        static getInstance() {
+            if (this.instance == null) {
+                this.instance = new Game();
+            }
+            return this.instance;
+        }
+        onGamePrepare() {
+            this.MyGameState = GameState.Gameing;
+        }
+        GamePass() {
+            this.MyGameState = GameState.GamePass;
+        }
+    }
+    Game.instance = null;
+
+    var SpeedState;
+    (function (SpeedState) {
+        SpeedState[SpeedState["normal"] = 1] = "normal";
+        SpeedState[SpeedState["addSpeed"] = 2] = "addSpeed";
+        SpeedState[SpeedState["stop"] = 3] = "stop";
+    })(SpeedState || (SpeedState = {}));
+    class BasePlayer extends Laya.Script3D {
+        constructor() {
+            super(...arguments);
+            this.maxSpeed = 0.25;
+            this.minSpeed = 0.1;
+            this.mySpeed = 0;
+            this.addSpeed = 0.005;
+        }
+        onStart() {
+            this.speedState = SpeedState.normal;
+            this.mySpeed = this.minSpeed;
+            this.startPos = this.owner.transform.position;
+            this.maxDisX = (RunwayControl.getInstance().RunwayPrefabs.transform.scale.x - this.owner.transform.scale.x) / 2;
+        }
+        onUpdate() {
+            if (Game.getInstance().MyGameState == GameState.GameReady)
+                return;
+            this.limit();
+            this.owner.transform.translate(new Laya.Vector3(0, 0, this.mySpeed));
+            switch (this.speedState) {
+                case SpeedState.normal:
+                    if (Game.getInstance().MyGameState == GameState.Gameing) {
+                        this.AttainSpeed(this.minSpeed);
+                    }
+                    break;
+                case SpeedState.addSpeed:
+                    if (Game.getInstance().MyGameState == GameState.Gameing) {
+                        this.AttainSpeed(this.maxSpeed);
+                    }
+                    break;
+                case SpeedState.stop:
+                    this.AttainSpeed(0);
+                    break;
+            }
+        }
+        UpdateState() {
+            switch (Game.getInstance().MyGameState) {
+                case GameState.GamePass:
+                    this.AttainSpeed(0);
+                    break;
+                case GameState.Gameing:
+                    break;
+                case GameState.GameOver:
+                    break;
+                case GameState.GameReady:
+                    break;
+            }
+        }
+        limit() {
+            if (this.owner.transform.localPositionX > this.maxDisX) {
+                this.owner.transform.localPositionX = this.maxDisX;
+            }
+            if (this.owner.transform.localPositionX < -this.maxDisX) {
+                this.owner.transform.localPositionX = -this.maxDisX;
+            }
+        }
+        Reset() {
+            this.owner.transform.position = this.startPos;
+        }
+        AttainSpeed(speed) {
+            if (this.mySpeed < speed) {
+                this.mySpeed += this.addSpeed;
+            }
+            else if (this.mySpeed > speed) {
+                this.mySpeed -= this.addSpeed;
+            }
+            if (this.mySpeed < 0.01) {
+                this.mySpeed = 0;
+            }
+        }
+        onTriggerEnter(other) {
+            if (other.owner.name == "Fnish") {
+                this.speedState = SpeedState.stop;
+                Game.getInstance().GamePass();
+            }
+        }
+    }
+
+    class Player extends BasePlayer {
+        constructor() {
+            super();
+            this.dis = 0;
+            this.moveIndex = 1;
+            this.startTouch = 1;
+            this.isDown = false;
+            this.particleofferPos = new Laya.Vector3();
+            this.particlePos = new Laya.Vector3();
+        }
+        onStart() {
+            super.onStart();
+            this.speedParticle = this.owner.parent.getChildByName("speedParticle");
+            Laya.Vector3.subtract(this.owner.transform.position, this.speedParticle.transform.position, this.particleofferPos);
+            this.dis = RunwayControl.getInstance().RunwayPrefabs.transform.scale.z;
+            Laya.stage.on(Laya.Event.MOUSE_DOWN, this, (event) => {
+                this.isDown = true;
+                this.startTouch = event.stageX;
+                this.startPosX = this.owner.transform.localPositionX;
+                this.speedState = SpeedState.addSpeed;
+                this.speedParticle.particleSystem.play();
+            });
+            Laya.stage.on(Laya.Event.MOUSE_UP, this, (event) => {
+                this.isDown = false;
+                this.startPosX = 0;
+                this.startTouch = 0;
+                this.speedState = SpeedState.normal;
+                this.speedParticle.particleSystem.stop();
+            });
+            Laya.stage.on(Laya.Event.MOUSE_MOVE, this, (event) => {
+                if (!this.isDown || Game.getInstance().MyGameState != GameState.Gameing)
+                    return;
+                let offtouch = event.stageX - this.startTouch;
+                this.owner.transform.localPositionX = (this.startPosX - offtouch / 150);
+            });
+        }
+        onUpdate() {
+            super.onUpdate();
+            Laya.Vector3.subtract(this.owner.transform.position, this.particleofferPos, this.particlePos);
+            this.speedParticle.transform.position = this.particlePos;
+            if (this.owner.transform.localPositionZ >= (this.moveIndex * this.dis - this.dis / 2 + 5)) {
+                this.moveIndex++;
+                RunwayControl.getInstance().CreatorRunway();
+            }
+        }
+        Reset() {
+            super.Reset();
+            this.moveIndex = 1;
+        }
+        onTriggerEnter(other) {
+            super.onTriggerEnter(other);
+            if (other.owner.name == "Fnish") {
+            }
+        }
+    }
+
+    class Camera extends Laya.Script3D {
+        constructor() {
+            super();
+            this.offerPos = new Laya.Vector3();
+            this.myPos = new Laya.Vector3();
+            this.myPosLerp = new Laya.Vector3();
+        }
+        onStart() {
+            this.Player = this.owner.parent.getChildByName("Player");
+            Laya.Vector3.subtract(this.Player.transform.position, this.owner.transform.position, this.offerPos);
+        }
+        onUpdate() {
+            Laya.Vector3.subtract(this.Player.transform.position, this.offerPos, this.myPos);
+            Laya.Vector3.lerp(this.owner.transform.position, this.myPos, 0.1, this.myPosLerp);
+            this.owner.transform.position = this.myPosLerp;
+        }
+    }
+
+    var State;
+    (function (State) {
+        State[State["Normal"] = 1] = "Normal";
+        State[State["Left"] = 2] = "Left";
+        State[State["Right"] = 3] = "Right";
+    })(State || (State = {}));
+    class AIPlayer extends BasePlayer {
+        constructor() {
+            super();
+            this.lRSpeed = 0.03;
+            this.lRTimer = 0.5;
+            this.lRCoolTimer = 0.5;
+            this.normalTimer = 0;
+            this.minNormalTimer = 2;
+            this.maxNormalTimer = 5;
+            this._minSpeed = 0;
+        }
+        onStart() {
+            super.onStart();
+            this.myState = State.Normal;
+            this.normalTimer = this.randomMintoMax(this.minNormalTimer, this.maxNormalTimer);
+            this._minSpeed = 0.15;
+            this.maxSpeed = 0.28;
+            this.minSpeed = this.randomMintoMax(this._minSpeed, this.maxSpeed);
+        }
+        randomMintoMax(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+        onUpdate() {
+            super.onUpdate();
+            if (Game.getInstance().MyGameState == GameState.Gameing) {
+                switch (this.myState) {
+                    case State.Normal:
+                        this.normalMove();
+                        break;
+                    case State.Left:
+                        this.leftMove();
+                        break;
+                    case State.Right:
+                        this.rightMove();
+                        break;
+                }
+            }
+        }
+        normalMove() {
+            this.normalTimer -= Laya.timer.delta / 1000;
+            if (this.normalTimer < 0) {
+                this.normalTimer = this.randomMintoMax(this.minNormalTimer, this.maxNormalTimer);
+                this.minSpeed = this.randomMintoMax(this._minSpeed, this.maxSpeed);
+                this.randomState();
+            }
+        }
+        leftMove() {
+            this.lRTimer -= Laya.timer.delta / 1000;
+            if (this.lRTimer < 0) {
+                this.lRTimer = this.lRCoolTimer;
+                this.myState = State.Normal;
+            }
+            this.owner.transform.translate(new Laya.Vector3(-this.lRSpeed, 0, 0));
+        }
+        rightMove() {
+            this.lRTimer -= Laya.timer.delta / 1000;
+            if (this.lRTimer < 0) {
+                this.lRTimer = this.lRCoolTimer;
+                this.myState = State.Normal;
+            }
+            this.owner.transform.translate(new Laya.Vector3(this.lRSpeed, 0, 0));
+        }
+        randomState() {
+            var random = Math.floor(Math.random() * 3);
+            switch (random) {
+                case 0:
+                    this.myState = State.Normal;
+                    break;
+                case 1:
+                    this.myState = State.Left;
+                    break;
+                case 2:
+                    this.myState = State.Right;
+                    break;
+            }
+        }
+    }
+
     class SceneLogic extends Laya.Script {
         constructor() { super(); }
         onStart() {
             this.Scene = this.owner;
-            this.Cube = this.Scene.getChildByName("Cube");
-            var material = new DyqqMaterial();
-            Laya.loader.load(["res/layabox.png", "res/clip_replay_btn.png"], Laya.Handler.create(null, function () {
-                material.BaseTextureSrc = Laya.loader.getRes("res/layabox.png");
-                material.BaseTextureDst = Laya.loader.getRes("res/clip_replay_btn.png");
-                material.alpha = 0.1;
+            this.Player = this.Scene.getChildByName("Player");
+            this.Runway = this.Scene.getChildByName("Runway");
+            this.Camrea = this.Scene.getChildByName("Main Camera");
+            RunwayControl.getInstance().SetRunwayPrefabs(this.Runway);
+            RunwayControl.getInstance().Init();
+            Game.getInstance().Player = this.Player;
+            this.CloneAIPlayer();
+            this.addComponent();
+            this.loadSkyBox();
+            this.loadFog();
+        }
+        addComponent() {
+            this.Player.addComponent(Player);
+            this.Camrea.addComponent(Camera);
+        }
+        CloneAIPlayer() {
+            var playerPos = this.Player.transform.position;
+            var disz = 1;
+            var runWidth = this.Runway.transform.scale.x - this.Player.transform.scale.x;
+            var posList = [
+                new Laya.Vector3(-runWidth / 2, playerPos.y, playerPos.z),
+                new Laya.Vector3(-runWidth / 4, playerPos.y, playerPos.z + disz),
+                new Laya.Vector3(0, playerPos.y, playerPos.z + 2 * disz),
+                new Laya.Vector3(runWidth / 4, playerPos.y, playerPos.z + disz),
+                new Laya.Vector3(runWidth / 2, playerPos.y, playerPos.z),
+            ];
+            for (var i = 0; i < 5; i++) {
+                var car = this.Player.clone();
+                this.Scene.addChild(car);
+                car.transform.position = posList[i];
+                car.addComponent(AIPlayer);
+                Game.getInstance().AIPlayerList.push(car);
+            }
+        }
+        loadSkyBox() {
+            var self = this;
+            Laya.BaseMaterial.load("res/atlas/SkyBox/skyMaterial.lmat", Laya.Handler.create(self, function (mat) {
+                var camera = self.Scene.getChildByName("Main Camera");
+                camera.clearFlag = Laya.BaseCamera.CLEARFLAG_SKY;
+                var skyRenderer = self.Scene.skyRenderer;
+                skyRenderer.mesh = Laya.SkyBox.instance;
+                skyRenderer.material = mat;
             }));
-            this.Cube.meshRenderer.material = material;
         }
-        onUpdate() {
-            this.Cube.transform.rotate(new Laya.Vector3(0, 2, 0), false, false);
-        }
-        onEnable() {
-        }
-        onDisable() {
-        }
-        wakeup() {
-        }
-        sleep() {
+        loadFog() {
+            var scene = this.Scene;
+            scene.ambientColor = new Laya.Vector3(0.94, 0.40, 0.52);
+            scene.enableFog = true;
+            scene.fogColor = new Laya.Vector3(0.96, 0.62, 0.70);
+            scene.fogStart = 20;
+            scene.fogRange = 60;
         }
     }
 
     var ObjectPool = zs.laya.ObjectPool;
-    var EventId = zs.laya.game.EventId;
+    var EventId$1 = zs.laya.game.EventId;
     class GameLogic extends zs.laya.game.AppMain {
         constructor() {
             super();
@@ -201,14 +568,14 @@
         onAwake() {
             super.onAwake();
             zs.laya.game.UIService.viewScript.store = zs.laya.ui.NormalStorePage;
-            Laya.stage.once(EventId.LAUNCH_COMPLETED, this, this.onGameLaunchReady);
-            Laya.stage.on(EventId.UI_VIEW_CLOSED, this, this.onViewClosed);
-            Laya.stage.on(EventId.UI_VIEW_OPENED, this, this.onViewOpened);
+            Laya.stage.once(EventId$1.LAUNCH_COMPLETED, this, this.onGameLaunchReady);
+            Laya.stage.on(EventId$1.UI_VIEW_CLOSED, this, this.onViewClosed);
+            Laya.stage.on(EventId$1.UI_VIEW_OPENED, this, this.onViewOpened);
         }
         onDestroy() {
             this.sceneLogic = null;
-            Laya.stage.off(EventId.UI_VIEW_CLOSED, this, this.onViewClosed);
-            Laya.stage.off(EventId.UI_VIEW_OPENED, this, this.onViewOpened);
+            Laya.stage.off(EventId$1.UI_VIEW_CLOSED, this, this.onViewClosed);
+            Laya.stage.off(EventId$1.UI_VIEW_OPENED, this, this.onViewOpened);
         }
         onGameLaunchReady(s) {
             DyqqShader.initShader();
@@ -219,7 +586,7 @@
             else {
                 Laya.stage.addComponent(ShaderTest);
             }
-            Laya.stage.event(EventId.GAME_HOME);
+            Laya.stage.event(EventId$1.GAME_HOME);
         }
         onViewClosed(viewName) {
             console.log(`${viewName} closed`);
